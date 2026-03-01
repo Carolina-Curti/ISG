@@ -122,14 +122,50 @@ document.addEventListener("keydown", (e) => {
 });
 
 // ===== Theme toggle (Día / Noche) =====
-const root = document.documentElement;
+(function () {
+  const root = document.documentElement;
+  const btn = document.getElementById('themeToggle');
+  const icon = document.getElementById('themeIcon');
 
-// Si querés recordar la elección del usuario:
-const saved = localStorage.getItem("theme");
-if (saved) root.setAttribute("data-theme", saved);
+  // Determina tema inicial:
+  // 1) si el usuario ya lo guardó en localStorage → usarlo
+  // 2) si no → usar prefers-color-scheme del sistema
+  function getInitialTheme() {
+    const saved = localStorage.getItem('theme'); // "dark" o "light"
+    if (saved) return saved;
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    return prefersDark ? 'dark' : 'light';
+  }
 
-function setTheme(next){
-  if (next === "dark") root.setAttribute("data-theme", "dark");
-  else root.removeAttribute("data-theme");
-  localStorage.setItem("theme", next);
-}
+  function applyTheme(theme) {
+    if (theme === 'dark') {
+      root.setAttribute('data-theme', 'dark');
+      btn.setAttribute('aria-pressed', 'true');
+      icon.textContent = '☀️'; // muestra sol para invitar a cambiar a claro
+    } else {
+      root.removeAttribute('data-theme');
+      btn.setAttribute('aria-pressed', 'false');
+      icon.textContent = '🌙'; // muestra luna para invitar a cambiar a oscuro
+    }
+  }
+
+  // Inicializa
+  const initial = getInitialTheme();
+  applyTheme(initial);
+
+  // Listener del botón
+  btn.addEventListener('click', () => {
+    const current = document.documentElement.hasAttribute('data-theme') ? 'dark' : 'light';
+    const next = current === 'dark' ? 'light' : 'dark';
+    applyTheme(next);
+    localStorage.setItem('theme', next);
+  });
+
+  // Si el usuario cambia preferencia del sistema, y no hay choice guardada, actualizamos.
+  window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+    const saved = localStorage.getItem('theme');
+    if (!saved) {
+      applyTheme(e.matches ? 'dark' : 'light');
+    }
+  });
+})();
