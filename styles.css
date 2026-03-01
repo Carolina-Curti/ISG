@@ -369,3 +369,13 @@ html[data-theme="dark"] .footer{ border-top:1px solid rgba(255,255,255,.08); }
   .nav__menu a{ width:100%; }
   .nav__menu.is-open{ display:flex; }
 }
+
+/* Make theme toggle text visible in dark mode */
+html[data-theme="dark"] #themeToggle{
+  color: #ffffff;              /* texto/emoji blanco */
+  border-color: rgba(255,255,255,.22);
+}
+
+html[data-theme="dark"] #themeToggle:hover{
+  background: rgba(255,255,255,.10);
+}
