@@ -508,3 +508,14 @@ html[data-theme="dark"] .video-card{
     max-width: 320px;
   }
 }
+
+/* =========================
+   MOBILE OVERRIDE: videos más prolijos en iPhone
+   (desktop sigue 9:16)
+   ========================= */
+@media (max-width: 600px){
+  .video{
+    max-width: 100%;
+    aspect-ratio: 16 / 9;   /* clave: deja de ser gigante */
+  }
+}
