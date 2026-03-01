@@ -120,3 +120,16 @@ lightbox?.addEventListener("click", (e) => {
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape" && lightbox.classList.contains("is-open")) closeLightbox();
 });
+
+// ===== Theme toggle (Día / Noche) =====
+const root = document.documentElement;
+
+// Si querés recordar la elección del usuario:
+const saved = localStorage.getItem("theme");
+if (saved) root.setAttribute("data-theme", saved);
+
+function setTheme(next){
+  if (next === "dark") root.setAttribute("data-theme", "dark");
+  else root.removeAttribute("data-theme");
+  localStorage.setItem("theme", next);
+}
