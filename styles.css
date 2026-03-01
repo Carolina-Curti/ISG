@@ -50,7 +50,7 @@ html[data-theme="dark"]{
   --card: rgba(255,255,255,.06);
   --border: rgba(255,255,255,.12);
 
-  --text:#eef2ff;
+  --text:#ffffff;
   --muted: rgba(238,242,255,.72);
 
   --shadow: 0 20px 60px rgba(0,0,0,.35);
